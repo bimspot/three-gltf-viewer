@@ -28,6 +28,8 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 // import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
+import { MeshoptDecoder} from "../lib/meshopt_decoder.js";
+import { EXT_meshopt_compression } from "../lib/meshopt_compression.js";
 
 import { GUI } from 'dat.gui';
 
@@ -223,6 +225,8 @@ export class Viewer {
         .setCrossOrigin('anonymous')
         .setDRACOLoader( new DRACOLoader( manager ).setDecoderPath( 'assets/wasm/' ) )
         .setKTX2Loader( new KTX2Loader( manager ).detectSupport( this.renderer ) );
+
+      loader.register(parser => new EXT_meshopt_compression(parser, MeshoptDecoder));
 
       const blobURLs = [];
 
